@@ -67,7 +67,7 @@ CREATE TABLE `curtida` (
 CREATE TABLE `pessoa` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
-  `avatar` blob NOT NULL,
+  `avatar` varchar(100) NOT NULL,
   `email` varchar(50) NOT NULL,
   `senha` varchar(50) NOT NULL,
   `descricao` varchar(500) NOT NULL,
@@ -85,7 +85,7 @@ CREATE TABLE `post` (
   `id` int(11) NOT NULL,
   `id_pessoa` int(11) NOT NULL,
   `descricao` varchar(500) NOT NULL,
-  `imagem` blob NOT NULL,
+  `imagem` varchar(500) NOT NULL,
   `data_publicacao` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
