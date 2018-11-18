@@ -7,21 +7,21 @@
   if ($_POST != NULL) {
 
     // Conecta ao BD
-    include_once "../bd.php";
+    include_once "bd.php";
 
     // Obtem dados do POST
-    $login = addslashes($_POST["login"]);
+    $email = addslashes($_POST["email"]);
     $senha = addslashes($_POST["senha"]);
 
     // Criptografa usando MD5
-    $senha = md5($senha);
+    // $senha = md5($senha);
 
     // Cria comando SQL
     $sql = "SELECT * 
-        FROM usuario 
-        WHERE login = '$login' 
+        FROM pessoa 
+        WHERE email = '$email' 
         AND senha = '$senha'";
-
+    
     // Executa comando SQL
     $retorno = $con->query($sql);
 
@@ -41,15 +41,19 @@
       $_SESSION["logado"] = true;
       $_SESSION["nome_usuario"] = $registro["nome"];
       $_SESSION["id_usuario"] = $registro["id"];
-      // Redireciona para a página principal
-      header("Location: chamado/listar.php");
+      echo "
+        <script>
+          location.href='html_base.html';
+        </script>
+      ";
     } else {
-      echo "<script>
-          alert('Login ou Senha Inválido!');
-          </script>";
+      echo "
+      <script>
+        alert('Email ou Senha Inválido!');
+      </script>";
     }
   }
-  include_once "../topo.php"; 
+  include_once "topo.php"; 
 ?>
   <h3> Vamos começar agora! </h3>
   <h4> Bem vindo a nossa rede social top!</h4>
@@ -58,24 +62,23 @@
       <img style="height: 104px;" src="http://krmangalam.edu.in/wp-content/uploads/2018/02/Student-login-icon.png"/>
     <div>
     <div class="row">
-      <form class="col s12">
+      <form method="post" class="col s12">
         <div class="row">
           <div class="input-field col s12">
-            <input id="email" name="login" type="text" class="validate" required>
+            <input id="email" name="email" type="text" class="validate" required>
             <label for="email">Email</label>
           </div>
           <div class="input-field col s12">
-            <input id="senha" name="senha" type="text" class="validate">
+            <input id="senha" name="senha" type="password" class="validate" required>
             <label for="senha">Senha</label>
           </div>
           </div>
-          <div class="Login-enter">
-            <a class="waves-effect waves-light btn btn-small">Entrar</a>
+          <div class="email-enter">
+            <button class="waves-effect waves-light btn btn-small" type="submit">Entrar</button>
           </div>
-          <div class="Login-enter">
+          <div class="email-enter">
             <a class="waves-effect waves-teal btn-flat btn-small">Cadastrar-se</a>
           </div>
       </form>
     </div>
   </div>
-<?php include_once "../rodape.php";?>
