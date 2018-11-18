@@ -1,9 +1,8 @@
 <?php
-  $host = "localhost";
+  $host = "db";
   $usuario = "root";
   $senha = "pass";
   $base_dados = "rede_social";
-  
   $con = new mysqli($host, $usuario, $senha, $base_dados);
 
   if ($con->connect_error) {
