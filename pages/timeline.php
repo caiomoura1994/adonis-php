@@ -219,5 +219,4 @@ function openNav() {
 }
 </script>
 
-</body>
-</html> 
+<?php include_once('../rodape.php');?>

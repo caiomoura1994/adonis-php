@@ -33,7 +33,7 @@
               name="description"
               rows="4"
               cols="50"
-              style="width: 90%;"
+              style="width: 100%;"
               required
             ></textarea>
           </div>
@@ -43,7 +43,7 @@
               name="image"
               type="text"
               class="validate"
-              style="width: 90%; margin-bottom:10px"
+              style="width: 100%; margin-bottom:10px"
               placeholder="Coloque aqui a Url da imagem"
             >
           </div>
