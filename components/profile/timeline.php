@@ -8,7 +8,6 @@
   $_SESSION["nascimento_usuario"] = $registro["nascimento"];
   $_SESSION["email_usuario"] = $registro["email"];
 -->
-<?php session_start(); ?>
 <div class="w3-card w3-round w3-white">
   <div class="w3-container">
     <h4 class="w3-center">
