@@ -55,30 +55,39 @@
   }
   include_once "topo.php"; 
 ?>
-  <h3> Vamos começar agora! </h3>
-  <h4> Bem vindo a nossa rede social top!</h4>
-  <div class="card">
-    <div class="">
-      <img style="height: 104px;" src="http://krmangalam.edu.in/wp-content/uploads/2018/02/Student-login-icon.png"/>
-    <div>
-    <div class="row">
-      <form method="post" class="col s12">
+
+<div id="container">
+  <h3 class="text">Bem vindo ao Adonis</h3>
+  <h6 class="text">Encontre amigos e compartinhe dados sobre seu pet</h6>
+  <div id="login-page" class="row">
+    <img src="https://image.flaticon.com/icons/svg/616/616408.svg" height="100">
+    <div class="col s12 z-depth-6 card-panel">
+      <form class="login-form" method="POST">
+        <div class="row">
+        </div>
         <div class="row">
           <div class="input-field col s12">
-            <input id="email" name="email" type="text" class="validate" required>
-            <label for="email">Email</label>
+            <i class="material-icons prefix">mail_outline</i>
+            <input class="validate" id="email" type="email" name="email">
+            <label for="email" data-error="wrong" data-success="right">Email</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <i class="material-icons prefix">lock_outline</i>
+            <input id="senha" type="password" name="senha">
+            <label for="senha">Password</label>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <input  type="submit" class="btn" value="Login">
           </div>
           <div class="input-field col s12">
-            <input id="senha" name="senha" type="password" class="validate" required>
-            <label for="senha">Senha</label>
-          </div>
-          </div>
-          <div class="email-enter">
-            <button class="waves-effect waves-light btn btn-small" type="submit">Entrar</button>
-          </div>
-          <div class="email-enter">
-            <a class="waves-effect waves-teal btn-flat btn-small">Cadastrar-se</a>
-          </div>
+            <p class="margin medium-small"><a href="#">Register Now!</a></p>
+          </div>      
+        </div>
       </form>
     </div>
   </div>
+</div>

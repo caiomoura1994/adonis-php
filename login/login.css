@@ -1,0 +1,33 @@
+#login-page {
+    width: 500px;
+    padding-top: 50px;
+ }
+
+body {
+     background: linear-gradient(270deg, #0bb287, #5dd5b6, #5d85d5, #1f396e);
+     background-size: 800% 800%;
+}
+
+ 
+ .card {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -moz-transform: translate(-50%, -50%);
+      -webkit-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+ }
+
+.text {
+     color: white;
+     font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Oxygen-Sans,Ubuntu,Cantarell,"Helvetica Neue",sans-serif;
+}
+
+
+body {
+     text-align: center;
+     height: -webkit-fill-available;
+     width: 100%;
+}
