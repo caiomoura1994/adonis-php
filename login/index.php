@@ -60,7 +60,7 @@
   <h3 class="text">Bem vindo ao Adonis</h3>
   <h6 class="text">Encontre amigos e compartinhe dados sobre seu pet</h6>
   <div id="login-page" class="row">
-    <img src="https://image.flaticon.com/icons/svg/616/616408.svg" height="100">
+    <img src="https://image.flaticon.com/icons/svg/616/616408.svg">
     <div class="col s12 z-depth-6 card-panel">
       <form class="login-form" method="POST">
         <div class="row">
