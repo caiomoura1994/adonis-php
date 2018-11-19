@@ -1,10 +1,15 @@
 <?php
-  include_once('../components/core/navbar.php');
   error_reporting(1);
   session_start();
-  if ($_SESSION["logado"] == NULL) {
-      header("Location: ../index.php");
+  $logado = $_SESSION['logado'];
+  if (!$logado) {
+    echo("
+    <script>
+      location.href='/';
+    </script>
+    ");
   }
+  include_once('../components/core/navbar.php');
   // conecta ao BD
   include_once "../bd.php";
   $userId=$_SESSION['id_usuario'];

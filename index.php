@@ -1,17 +1,23 @@
 <?php
   // Não exibe msg de notificação
   error_reporting(1);
+  session_start();
+  if ($_GET['finish_session']) {
+    $_SESSION = array();
+    session_unset();
+    session_destroy();
+  }
+  
+  session_start();
+  if ($_SESSION["logado"]) {
+    header("Location: pages/timeline.php"); /* Redirect browser */
+  }
 
   // Clicou em enviar?
   if ($_POST != NULL) {
-
-    // Conecta ao BD
     include_once "bd.php";
-
-    // Obtem dados do POST
     $email = addslashes($_POST["email"]);
     $senha = addslashes($_POST["senha"]);
-
     // Criptografa usando MD5
     // $senha = md5($senha);
 
@@ -35,7 +41,6 @@
     // Encontrou usuário?
     if ($registro) {
       // Inicia a sessão
-      session_start();
       // Guarda variáveis na sessão
       $_SESSION["logado"] = true;
       $_SESSION["nome_usuario"] = $registro["nome"];
@@ -56,31 +61,5 @@
   }
   include_once "topo.php"; 
 ?>
-<h3> Vamos começar agora! </h3>
-<h4> Bem vindo a nossa rede social top!</h4>
-<div class="card">
-  <div class="">
-    <img style="height: 104px;" src="http://krmangalam.edu.in/wp-content/uploads/2018/02/Student-login-icon.png"/>
-  <div>
-  <div class="row">
-    <form method="post" class="col s12">
-      <div class="row">
-        <div class="input-field col s12">
-          <input id="email" name="email" type="text" class="validate" required>
-          <label for="email">Email</label>
-        </div>
-        <div class="input-field col s12">
-          <input id="senha" name="senha" type="password" class="validate" required>
-          <label for="senha">Senha</label>
-        </div>
-        </div>
-        <div class="email-enter">
-          <button class="waves-effect waves-light btn btn-small" type="submit">Entrar</button>
-        </div>
-        <div class="email-enter">
-          <a class="waves-effect waves-teal btn-flat btn-small">Cadastrar-se</a>
-        </div>
-    </form>
-  </div>
-</div>
+<?php include_once "login/index.php";?>
 <?php include_once "rodape.php";?>

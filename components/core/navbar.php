@@ -21,11 +21,15 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
     />  Adonis
   </a>
   <a href="/pages/timeline.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
-  <a href="/pages/find_friends.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-user"></i></a>
+  <a href="/pages/find_friends.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-group"></i></a>
   <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
-  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
-    <?echo $_SESSION['nome_usuario']?>
-    <img src="<?echo $_SESSION['avatar_usuario']?>" class="w3-circle" style="height:28px;width:28px" alt="Avatar">
-    </a>
+  <a href="javascript:logout();" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
+    Sair
+  </a>
  </div>
 </div>
+<script>
+  function logout(){
+    location.href = "/?finish_session=true"
+  }
+</script>

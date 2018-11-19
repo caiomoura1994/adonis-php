@@ -3,8 +3,16 @@
   include_once "../topo.php";
   error_reporting(1);
   session_start();
+  $logado = $_SESSION['logado'];
+  if (!$logado) {
+    echo("
+    <script>
+      location.href='/';
+    </script>
+    ");
+  }
   if ($_SESSION["logado"] == NULL) {
-      header("Location: ../index.php");
+      header("Location: /");
   }
   // conecta ao BD
   include_once "../bd.php";
