@@ -17,8 +17,12 @@
       <img src="<?php echo($_SESSION["avatar_usuario"])?>" class="w3-circle" style="height:106px;width:106px" alt="Avatar">
     </p>
     <hr>
-    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> Designer, UI</p>
-    <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p>
-    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> April 1, 1988</p>
+    <p><i class="fa fa-pencil fa-fw w3-margin-right w3-text-theme"></i> 
+    <?php echo $_SESSION["descricao_usuario"]?>
+    </p>
+    <!-- <p><i class="fa fa-home fa-fw w3-margin-right w3-text-theme"></i> London, UK</p> -->
+    <p><i class="fa fa-birthday-cake fa-fw w3-margin-right w3-text-theme"></i> 
+    <?php echo $_SESSION["nascimento_usuario"]?>
+    </p>
   </div>
 </div>

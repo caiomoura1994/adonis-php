@@ -16,7 +16,7 @@
     // $senha = md5($senha);
 
     // Cria comando SQL
-    $sql = "SELECT * 
+    $sql = "SELECT * , DATE_FORMAT(nascimento, '%d/%m/%Y') AS nascimento 
         FROM pessoa 
         WHERE email = '$email' 
         AND senha = '$senha'";

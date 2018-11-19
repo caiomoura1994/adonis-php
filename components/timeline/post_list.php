@@ -4,9 +4,10 @@
             post.id,
             post.descricao,
             post.imagem,
-            post.data_publicacao,
             pessoa.nome,
-            pessoa.avatar
+            pessoa.avatar,
+            pessoa.id as profile_id,
+            DATE_FORMAT(post.data_publicacao, "%d/%m/%Y") AS data_publicacao
           FROM post
           INNER JOIN pessoa
           ON post.id_pessoa = pessoa.id
@@ -22,12 +23,17 @@
     $imagem = $registro['imagem'];
     $data_publicacao = $registro['data_publicacao'];
     $nome = $registro['nome'];
+    $profile_id = $registro['profile_id'];
     $avatar = $registro['avatar'];
     echo (
       "<div class='w3-container w3-card w3-white w3-round w3-margin'><br>
-        <img src='$avatar' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='width:60px'>
+        <a href='/pages/profile.php?profile_id=$profile_id'>
+          <img src='$avatar' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='width:60px'>
+        </a>
         <span class='w3-right w3-opacity'>$data_publicacao</span>
-        <h4>$nome</h4><br>
+        <a href='/pages/profile.php?profile_id=$profile_id'>
+          <h4>$nome</h4>
+        </a>
         <hr class='w3-clear'>
         <img src='$imagem' style='width:100%' class='w3-margin-bottom'>
         <p>$descricao</p>
