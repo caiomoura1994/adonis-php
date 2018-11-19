@@ -1,7 +1,7 @@
 <?php
   include_once('../components/core/navbar.php');
   include_once "../topo.php";
-  error_reporting(1);
+  // error_reporting(1);
   session_start();
   $logado = $_SESSION['logado'];
   if (!$logado) {
@@ -26,20 +26,21 @@
   $remove_relation = $_GET['remove_relationship'];
   if ($remove_relation) {
     $remove_friend_query = "DELETE FROM amigo WHERE id = $remove_relation";
+    $con->query($remove_friend_query);
   }
   
   $friend_id=$_GET['friendId'];
   if ($friend_id) {
-    $add_friend_query = "INSERT INTO amigo ('status', id_pessoa, id_pessoa_amigo)
+    $add_friend_query = "INSERT INTO amigo (status, id_pessoa, id_pessoa_amigo)
                     VALUES ('1', $userId, $friend_id)";
+    $con->query($add_friend_query);
   }
-  // $sql = "$remove_friend_query
-  //         $add_friend_query
-  $sql = "SELECT * , DATE_FORMAT(nascimento, '%d/%m/%Y') AS nascimento
-          FROM pessoa
-          -- LEFT JOIN amigo on pessoa.id = amigo.id_pessoa
-          WHERE  pessoa.id <> $userId
-          $filtro";
+  $sql = "
+    SELECT *
+    FROM pessoa
+    WHERE  pessoa.id <> $userId
+    $filtro
+  ";
 
   // Executa a query no BD
   $retorno = $con->query($sql);
@@ -48,7 +49,8 @@
   if ($retorno == false) {
     echo $con->error;
   }
-
+  $friend_query = "SELECT * FROM amigo";
+  $amigos = $con->query($friend_query);
 ?>
 
 <br>
@@ -96,41 +98,42 @@
         $avatar = $registro["avatar"];
         $description = $registro["descricao"];
         $status = $registro["status"];
-  
-        $view_friends = $registro["view_friends"];
-        if ($view_friends) {
-          $icon='check';
-        } else {
-          $icon='person_add';
-        }
-  
-        // CSS do Status
-        if ( $status == "Aberto" ) {
-          $css_status = "background-color:#F0F8FF;";
-        } else if ( $status == "Em Andamento" ) {
-          $css_status = "background-color:orange;";
-        } else if ( $status == "Fechado" ) {
-          $css_status = "background-color:green;";
+
+        $label="<i class='material-icons'>person_add</i>";
+        
+        while ($amigo = $amigos->fetch_array()) {
+          if (
+            $amigo['id_pessoa']==$userId &&
+            $amigo['id_pessoa_amigo']==$friendId
+          ) {
+            $relation_id = $amigo['id'];
+            $relation_status = $amigo['status'];
+            if ($amigo['status'] == 1) {
+              $label="<i class='material-icons'>done</i>";
+            }
+            if ($amigo['status'] == 2) {
+              $label="<i class='material-icons'>done_all</i>";
+            }
+            break;
+          }
         }
 
         if (!$friendId) {
           $friendId=0;
         }
-        if (!$view_friends) {
-          $view_friends=false;
-        }
   
-        // imprime linha em HTML
         echo "<tr>
           <td>$nome</td>
           <td><img src='$avatar' style='height: 56px;' /></td>
           <td>$description</td>
           <td>
-            <a class='btn btn-info' href='javascript:handleFriend($friendId, $userId, $view_friends);'>
-              <i class='material-icons'>$icon</i>
+            <a class='btn btn-info' href='javascript:handleFriend($friendId, $relation_id);'>
+              $label
             </a>
+            
           </td>
         </tr>";
+        $relation_id=null;
       }
     }
 ?>
@@ -139,10 +142,10 @@
   function handleFindName() {
     location.href='find_friends.php?find_name=' + document.getElementById('inputNome').value;
   }
-  function handleFriend(friendId, userId, view_friends) {
+  function handleFriend(friendId, relation_id) {
     var filter='find_friends.php?find_name=' + document.getElementById('inputNome').value;
-    if (view_friends) {
-      var href = filter+`&remove_relationship=${view_friends}`;
+    if (relation_id) {
+      var href = filter+`&remove_relationship=${relation_id}`;
     } else {
       var href = filter+`&friendId=${friendId}`;
     }

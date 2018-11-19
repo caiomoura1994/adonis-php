@@ -20,9 +20,7 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
       src="https://banner2.kisspng.com/20180214/wse/kisspng-pet-sitting-happy-animals-dog-animals-in-spanish-white-beard-dog-vector-5a83f003cfaf14.5775743415185960998507.jpg"
     />  Adonis
   </a>
-  <a href="/pages/timeline.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="News"><i class="fa fa-globe"></i></a>
   <a href="/pages/find_friends.php" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Account Settings"><i class="fa fa-group"></i></a>
-  <a href="#" class="w3-bar-item w3-button w3-hide-small w3-padding-large w3-hover-white" title="Messages"><i class="fa fa-envelope"></i></a>
   <a href="javascript:logout();" class="w3-bar-item w3-button w3-hide-small w3-right w3-padding-large w3-hover-white" title="My Account">
     Sair
   </a>
