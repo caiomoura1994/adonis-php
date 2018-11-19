@@ -1,5 +1,6 @@
-<?php include_once('../components/core/navbar.php'); ?>
 <?php
+  include_once('../components/core/navbar.php');
+  include_once "../topo.php";
   error_reporting(1);
   session_start();
   if ($_SESSION["logado"] == NULL) {
@@ -28,6 +29,7 @@
   //         $add_friend_query
   $sql = "SELECT * , DATE_FORMAT(nascimento, '%d/%m/%Y') AS nascimento
           FROM pessoa
+          -- LEFT JOIN amigo on pessoa.id = amigo.id_pessoa
           WHERE  pessoa.id <> $userId
           $filtro";
 
@@ -39,7 +41,6 @@
     echo $con->error;
   }
 
-  include_once "../topo.php";
 ?>
 
 <br>

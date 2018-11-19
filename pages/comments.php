@@ -1,54 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Comments</title>
-     <!--Import Google Icon Font-->
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-      <link type="text/css" rel="stylesheet" href="./login/login.css"/>
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<?php
+  include_once('../components/core/navbar.php');
+  error_reporting(1);
+  session_start();
+  if ($_SESSION["logado"] == NULL) {
+      header("Location: ../index.php");
+  }
+  // conecta ao BD
+  include_once "../bd.php";
+  $userId=$_SESSION['id_usuario'];
 
-      <!-- Compiled and minified CSS -->
-      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  $post_id = $_GET['post_id'];
+  if ($post_id) {
+    $filtro = "WHERE post.id = '$post_id'";
+  }
 
-      <!-- Compiled and minified JavaScript -->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  </head>
-<body>
-    <div class="container">
-        <h1>Comentarios:</h1>
-        <!-- Comments -->
-        <div class="row">
-            <div class="col s12">
-                <div class="card blue-grey darken-1">
-                    <div class="card-content white-text">
-                    <div>
-                        <table>
-                            <tr>
-                                <td width="12%"><img src="https://image.flaticon.com/icons/svg/616/616408.svg" height="50"></td>
-                                <td><span class="card-title">Matheus Lima</span></td>
-                            </tr>
-                        </table>
-                    <div>
-                    <p style="comment">Muito Legal isso tudo gostaria asdasdas asdasd asdasd.</p>
-                    </div>
-                </div>
+  $sql = "SELECT * , DATE_FORMAT(data_publicacao, '%d/%m/%Y') AS data_publicacao
+          FROM post
+          INNER JOIN pessoa on post.id_pessoa = pessoa.id
+          $filtro";
+
+  // Executa a query no BD
+  $retorno = $con->query($sql);
+
+  // Deu erro no SQL?
+  if ($retorno == false) {
+    echo $con->error;
+  }
+
+  include_once "../topo.php";
+  while ($registro = $retorno->fetch_array()) {    
+    $descricao = $registro['descricao'];
+    $id_post = $registro['id'];
+    $imagem = $registro['imagem'];
+    $data_publicacao = $registro['data_publicacao'];
+    $nome = $registro['nome'];
+    $profile_id = $registro['profile_id'];
+    $avatar = $registro['avatar'];
+    $disable_comments = true;
+  }
+?>
+<div class="container">
+    <h1>Comentarios:</h1>
+    <?php include_once('../components/core/post_block.php'); ?>
+    <?php include_once('../components/core/comments.php'); ?>
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+            <div class="input-field col s12">
+                <textarea id="textarea1" class="materialize-textarea"></textarea>
+                <label for="textarea1">Comentar</label>
+                <input type="submit" value="Enviar" class="btn" style="float: right;">
             </div>
-        </div>
-        <div class="row">
-            <form class="col s12">
-                <div class="row">
-                <div class="input-field col s12">
-                    <textarea id="textarea1" class="materialize-textarea"></textarea>
-                    <label for="textarea1">Comentar</label>
-                    <input type="submit" value="Enviar" class="btn" style="float: right;">
-                </div>
-                </div>
-            </form>
-        </div>
-    <div>
-</body>
-</html>
+            </div>
+        </form>
+    </div>
+<div>
+<?php include_once("../rodape.php");?>

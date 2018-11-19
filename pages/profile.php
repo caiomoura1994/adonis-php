@@ -1,5 +1,5 @@
-<?php include_once('../components/core/navbar.php'); ?>
 <?php
+  include_once('../components/core/navbar.php');
   error_reporting(1);
   session_start();
   if ($_SESSION["logado"] == NULL) {
