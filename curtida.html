@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <title>Hello, world!</title>
+  </head>
+  <body>
+      <h1>Exemplo de como dar Like via AJAX</h1>
+
+      <br>
+      
+      <span id="qtd_likes"></span> 
+      <a href="javascript:curtir(10);">
+        <i class="far fa-thumbs-up"></i>
+      </a>
+      
+  <script>
+
+    // O JQUEY já foi incluído no rodapé com o Bootstrap
+    // ATENÇÃO: não usar a versão SLIM do jQUERY
+    // No bootstrap vem a versão SLIM, tive que trocar
+
+    function curtir(id_postagem) {
+      // Exemplo de como pegar comentário com jQuery. 
+      // Colocar no ID do textarea o ID do POST
+      //var comentario = $("comentario_" + id_post).val();
+      // $.ajax({
+      //   method: "POST",
+      //   url: "exemplo_like.php",
+      //   dataType: 'json',
+      //   data: { acao: "like", postagem: id_postagem }
+      // })
+      // .done(function(result){
+      //   console.log(result);
+      //   if (result.status == true) {
+      //     // Atualiza a quantidade de likes
+      //     $("#qtd_likes").html(result.likes);
+      //   } else {
+      //     alert(result.msg);
+      //   }
+
+      // })
+      // .fail(function(){
+      //   // alert("Erro ao enviar requisição!");
+      // });
+    }
+  </script>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+  </body>
+</html>
