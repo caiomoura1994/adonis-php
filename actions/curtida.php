@@ -44,5 +44,25 @@ if ($_POST["acao"] == "like") {
 		$data = array("status"=>false, "msg"=>"Erro ao curtir!");
 	}
 }
+if ($_POST["acao"] == "listLikes") {
+	$id_post = $_POST["postagem"];
+	$sql_seleciona_todas_curtidas = "SELECT * 
+	FROM curtida
+	inner join pessoa on  pessoa.id =curtida.id_pessoa
+	where id_post = $id_post";
+	$retorno = $con->query($sql_seleciona_todas_curtidas);
+	if ($retorno) {
+		$curtidas = array();
+		while ($registro = $retorno->fetch_array()) {
+			$array_registro = array(
+				"avatar"=>$registro['avatar'],
+				"nome"=>$registro['nome'],
+				"id"=>$registro['id_pessoa'],
+			);
+			array_push($curtidas, $array_registro);
+		}
+		$data = $curtidas;
+	}
+}
 echo json_encode($data);
 ?>

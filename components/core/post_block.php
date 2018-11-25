@@ -37,8 +37,11 @@ echo (
         <a href='javascript:curtir($id_post, $index_post);' class='waves-effect btn-flat btn-floating'>
           <i class='Post-actions-like-icon material-icons'>$icon_favorite</i>
         </a>
-        <a class='btn-flat btn-floating Post-actions-counter'>
-          $contador_curtidas
+        <a
+          href='javascript:openModalLikes($id_post);'
+          class='btn-flat btn-floating Post-actions-counter
+        >
+            $contador_curtidas
         </a>
       </div>
       <div class='Post-actions-right'>
@@ -48,6 +51,21 @@ echo (
   </div>
   "
 );
+
+// <!-- Modal Structure -->
+echo("
+<div id='modal' class='modal bottom-sheet'>
+  <div class='modal-content'>
+    <h4>Quem curtiu essa postagem?</h4>
+    <ul>
+      <li id='li-curtidas'></li>
+    </ul>
+  </div>
+  <div class='modal-footer'>
+    <a href='#!' class='modal-close waves-effect waves-green btn-flat'>Fechar</a>
+  </div>
+</div>
+");
 ?>
 <style>
   .Post-actions-container {
@@ -76,7 +94,44 @@ echo (
     color: white;
   }
 </style>
+    
 <script>
+
+  function openModalLikes(id_post) {
+    $.ajax({
+			method: "POST",
+			url: '/actions/curtida.php',
+			dataType: 'json',
+			data: { acao: "listLikes", postagem: id_post }
+		})
+		.done(function(result){
+			console.log(result);
+      var elementModal = document.getElementById('modal');
+      var instance = M.Modal.init(elementModal);
+      var liCurtidas = document.getElementById('li-curtidas');
+      var list = [];
+      for (const key in result) {
+        var curtida = result[key];
+        list.push(`<li>
+          <div class="row">
+            <div class="col s12 m12">
+              <div class="card-panel">
+                <a href='/pages/profile.php?profile_id=${curtida.id}'>
+                  <img src='${curtida.avatar}' alt='Avatar' class='w3-circle w3-margin-right' style='width:40px'>
+                </a>
+                <a href='/pages/profile.php?profile_id=${curtida.id}'>
+                  ${curtida['nome']}
+                </a>
+              </div>
+            </div>
+          </div>
+        </li>`)
+      }
+      liCurtidas.innerHTML = list.join('');
+      instance.open();
+		});
+  }
+
 	function curtir(id_postagem, index_postagem) {
 		$.ajax({
 			method: "POST",
