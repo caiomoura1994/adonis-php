@@ -4,17 +4,18 @@ $userId=$_SESSION["id_usuario"];
 $quer_cruzar_sql = "SELECT *
         FROM pets
         where pets.id_pessoa <> $userId and pets.quer_cruzar=1
-        ORDER BY pets.id desc;
+        ORDER BY RAND();
 ";
-$retorno = $con->query($quer_cruzar_sql);
-if ($retorno == false) {
-  echo $retorno->error;
+$retorno_quer_cruzar_sql = $con->query($quer_cruzar_sql);
+if ($retorno_quer_cruzar_sql == false) {
+  echo $retorno_quer_cruzar_sql->error;
 }
 
-while ($registro = $retorno->fetch_array()) {
+while ($registro = $retorno_quer_cruzar_sql->fetch_array()) {
   $avatar = $registro['avatar'];
   $nome = $registro['nome'];
   $descricao = $registro['descricao'];
+  echo("<script>console.log('$nome, $descricao')</script>");
   echo "
   <div class='w3-card w3-round w3-white w3-center'>
   <div class='w3-container'>
@@ -26,6 +27,7 @@ while ($registro = $retorno->fetch_array()) {
   </div>
   </div>
   ";
+  break;
 }
 
 ?>

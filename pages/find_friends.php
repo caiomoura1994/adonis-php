@@ -29,10 +29,10 @@
     $con->query($remove_friend_query);
   }
   
-  $friend_id=$_GET['friendId'];
-  if ($friend_id) {
+  $facaSolicitacao_friendId=$_GET['facaSolicitacao_friendId'];
+  if ($facaSolicitacao_friendId || $facaSolicitacao_friendId==0) {
     $add_friend_query = "INSERT INTO amigo (status, id_pessoa, id_pessoa_amigo)
-                    VALUES ('1', $userId, $friend_id)";
+                    VALUES ('1', $userId, $facaSolicitacao_friendId)";
     $con->query($add_friend_query);
   }
   $sql = "
@@ -49,8 +49,6 @@
   if ($retorno == false) {
     echo $con->error;
   }
-  $friend_query = "SELECT * FROM amigo";
-  $amigos = $con->query($friend_query);
 ?>
 
 <br>
@@ -97,60 +95,67 @@
         $nascimento = $registro["nascimento"];
         $avatar = $registro["avatar"];
         $description = $registro["descricao"];
-        $status = $registro["status"];
+        // $status = $registro["status"];
 
-        $label="<i class='material-icons'>person_add</i>";
-        
+        $friend_query = "SELECT * FROM amigo WHERE id_pessoa=$userId AND id_pessoa_amigo=$friendId;";
+        // $friend_query = "SELECT * FROM amigo WHERE id_pessoa=$friendId id_pessoa_amigo=$userId;";
+
+        $amigos = $con->query($friend_query);
+        // 1 nao foi solicitado
+        $relation_button="
+          <a class='btn btn-info' href='javascript:facaSolicitacao($friendId);'>
+            <i class='material-icons'>person_add</i>
+          </a>
+        ";
         while ($amigo = $amigos->fetch_array()) {
-          if (
-            $amigo['id_pessoa']==$userId &&
-            $amigo['id_pessoa_amigo']==$friendId
-          ) {
-            $relation_id = $amigo['id'];
-            $relation_status = $amigo['status'];
-            if ($amigo['status'] == 1) {
-              $label="<i class='material-icons'>done</i>";
-            }
-            if ($amigo['status'] == 2) {
-              $label="<i class='material-icons'>done_all</i>";
-            }
-            break;
+          $relation_id = $amigo['id'];
+          $relation_status = $amigo['status'];
+          // 2 eu solicitei
+          if ($amigo['status'] == 1) {
+            $relation_button="
+              <a class='btn btn-info' href='javascript:removeSolicitacao($relation_id);'>
+                <i class='material-icons'>done</i>
+              </a>
+            ";
           }
-        }
-
-        if (!$friendId) {
-          $friendId=0;
+          // 3 ele aceitou
+          if ($amigo['status'] == 2) {
+            $relation_button="
+              <a class='btn btn-info' href='javascript:removeSolicitacao($relation_id);'>
+                <i class='material-icons'>done_all</i>
+              </a>
+            ";
+          }
         }
   
         echo "<tr>
           <td>$nome</td>
           <td><img src='$avatar' style='height: 56px;' /></td>
           <td>$description</td>
-          <td>
-            <a class='btn btn-info' href='javascript:handleFriend($friendId, $relation_id);'>
-              $label
-            </a>
-            
-          </td>
+          <td> $relation_button  </td>
         </tr>";
-        $relation_id=null;
       }
     }
 ?>
 </table>
 <script>
+  function getFilter() {
+    const inputValue = document.getElementById('inputNome').value
+    return `find_friends.php?find_name=${inputValue}`;
+  }
+
   function handleFindName() {
-    location.href='find_friends.php?find_name=' + document.getElementById('inputNome').value;
+    location.href=getFilter();
   }
-  function handleFriend(friendId, relation_id) {
-    var filter='find_friends.php?find_name=' + document.getElementById('inputNome').value;
-    if (relation_id) {
-      var href = filter+`&remove_relationship=${relation_id}`;
-    } else {
-      var href = filter+`&friendId=${friendId}`;
-    }
-    location.href = href;
+
+  function facaSolicitacao(friendId) {
+    location.href = `${getFilter()}&facaSolicitacao_friendId=${friendId}`;
   }
+
+  function removeSolicitacao(relation_id) {
+    location.href = `${getFilter()}&remove_relationship=${relation_id}`;
+  }
+
 </script>
 
 <?php include_once "../rodape.php"; ?>

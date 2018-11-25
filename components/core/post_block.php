@@ -11,6 +11,15 @@ if (!$disable_comments){
   </a>
   ";
 }
+$icon_favorite = 'favorite_border';
+$sql_seleciona_se_ja_teve_curtida = "SELECT * 
+			FROM curtida
+			WHERE id_pessoa = '$userId'
+      AND id_post = '$id_post'";
+if ( $registro = $con->query($sql_seleciona_se_ja_teve_curtida)->fetch_array() ) {
+  $icon_favorite = 'favorite';
+}
+
 echo (
   "<div class='w3-container w3-card w3-white w3-round w3-margin'><br>
     <a href='/pages/profile.php?profile_id=$profile_id'>
@@ -26,7 +35,7 @@ echo (
     <div class='Post-actions-container'>
       <div class='Post-actions-left'>
         <a href='javascript:curtir($id_post, $index_post);' class='waves-effect btn-flat btn-floating'>
-          <i class='Post-actions-like-icon material-icons'>favorite_border</i>
+          <i class='Post-actions-like-icon material-icons'>$icon_favorite</i>
         </a>
         <a href='javascript:curtir($id_post, $index_post);' class='btn-flat btn-floating Post-actions-counter'>
           $contador_curtidas
@@ -49,11 +58,13 @@ echo (
     color: white;
   }
   .Post-actions-left {
+    z-index: 0;
     background-color: #4c6371;
     border-radius: 100px;
     margin: 8px;
   }
   .Post-actions-right {
+    z-index: 0;
     background-color: #4c6371;
     border-radius: 100px;
     margin: 8px;
