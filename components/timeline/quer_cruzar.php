@@ -15,7 +15,6 @@ while ($registro = $retorno_quer_cruzar_sql->fetch_array()) {
   $avatar = $registro['avatar'];
   $nome = $registro['nome'];
   $descricao = $registro['descricao'];
-  echo("<script>console.log('$nome, $descricao')</script>");
   echo "
   <div class='w3-card w3-round w3-white w3-center'>
   <div class='w3-container'>

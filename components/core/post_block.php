@@ -19,7 +19,6 @@ $sql_seleciona_se_ja_teve_curtida = "SELECT *
 if ( $registro = $con->query($sql_seleciona_se_ja_teve_curtida)->fetch_array() ) {
   $icon_favorite = 'favorite';
 }
-
 echo (
   "<div class='w3-container w3-card w3-white w3-round w3-margin'><br>
     <a href='/pages/profile.php?profile_id=$profile_id'>
@@ -105,7 +104,6 @@ echo("
 			data: { acao: "listLikes", postagem: id_post }
 		})
 		.done(function(result){
-			console.log(result);
       var elementModal = document.getElementById('modal');
       var instance = M.Modal.init(elementModal);
       var liCurtidas = document.getElementById('li-curtidas');
