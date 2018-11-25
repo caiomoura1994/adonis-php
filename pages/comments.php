@@ -71,7 +71,7 @@
   $index_post = 0;
   
 ?>
-<div class="container">
+<div class="container" style="padding-top: 16px;">
     <h1>Comentarios:</h1>
     <?php include_once('../components/core/post_block.php'); ?>
     <?php include_once('../components/core/comments.php'); ?>

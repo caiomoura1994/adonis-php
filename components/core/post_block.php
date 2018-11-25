@@ -19,6 +19,12 @@ $sql_seleciona_se_ja_teve_curtida = "SELECT *
 if ( $registro = $con->query($sql_seleciona_se_ja_teve_curtida)->fetch_array() ) {
   $icon_favorite = 'favorite';
 }
+
+$sql_contador_curtidas = "SELECT count(curtida.id) FROM curtida WHERE id_post = $id_post";
+$retorno = $con->query($sql_contador_curtidas);
+while ($registro = $retorno->fetch_array()) {
+  $contador_curtidas = $registro[0];
+}
 echo (
   "<div class='w3-container w3-card w3-white w3-round w3-margin'><br>
     <a href='/pages/profile.php?profile_id=$profile_id'>
@@ -38,9 +44,9 @@ echo (
         </a>
         <a
           href='javascript:openModalLikes($id_post);'
-          class='btn-flat btn-floating Post-actions-counter
+          class='btn-flat btn-floating Post-actions-counter'
         >
-            $contador_curtidas
+          $contador_curtidas
         </a>
       </div>
       <div class='Post-actions-right'>
