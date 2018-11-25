@@ -71,7 +71,7 @@ $timeline_all_posts_sql = "SELECT
                             pessoa.nome,
                             pessoa.avatar,
                             pessoa.id as profile_id,
-                            DATE_FORMAT(post.data_publicacao, '%d/%m/%Y') AS data_publicacao
+                            DATE_FORMAT(post.data_publicacao, '%d/%m/%Y às %H:%i') AS data_publicacao
                           FROM post
                           INNER JOIN pessoa ON pessoa.id = post.id_pessoa
                           left JOIN curtida ON post.id = curtida.id_post

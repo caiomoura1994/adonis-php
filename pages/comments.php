@@ -2,6 +2,7 @@
   error_reporting(1);
   session_start();
   $logado = $_SESSION['logado'];
+  $userId=$_SESSION['id_usuario'];
   if (!$logado) {
     echo("
     <script>
@@ -12,9 +13,16 @@
   include_once('../components/core/navbar.php');
   // conecta ao BD
   include_once "../bd.php";
-  $userId=$_SESSION['id_usuario'];
-
   $post_id = $_GET['post_id'];
+  if ($_POST != NULL) {
+    $comment = addslashes($_POST["comment"]);
+    $sql_insert_comentario = "INSERT INTO comentario (id_pessoa, id_post, comentario)
+    VALUES ('$userId', '$post_id', '$comment');
+    ";
+    $con->query($sql_insert_comentario);
+  }
+  
+
   if ($post_id) {
     $filtro = "WHERE post.id = '$post_id'";
   }
@@ -30,7 +38,7 @@
               pessoa.nome,
               pessoa.avatar,
               pessoa.id as profile_id,
-              DATE_FORMAT(post.data_publicacao, '%d/%m/%Y') AS data_publicacao
+              DATE_FORMAT(post.data_publicacao, '%d/%m/%Y às %H:%i') AS data_publicacao
             FROM post
             INNER JOIN pessoa ON pessoa.id = post.id_pessoa
             left JOIN curtida ON post.id = curtida.id_post
@@ -68,12 +76,13 @@
     <?php include_once('../components/core/post_block.php'); ?>
     <?php include_once('../components/core/comments.php'); ?>
     <div class="row">
-      <form class="col s12">
-        <div class="row">
-          <div class="input-field col s12">
-            <textarea id="textarea1" class="materialize-textarea"></textarea>
-            <label for="textarea1">Comentar</label>
-            <input type="submit" value="Enviar" class="btn" style="float: right;">
+      <form method='post' action='comments.php?post_id=<?php echo $post_id?>' class='col s12'>
+        <div class="file-field input-field">
+          <button class="btn waves-effect waves-light" type="submit" name="action">Enviar
+            <i class="material-icons right">send</i>
+          </button>
+          <div class="file-path-wrapper">
+            <input id="comment" name="comment" type="text" class="validate" value="">
           </div>
         </div>
       </form>

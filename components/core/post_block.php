@@ -6,7 +6,7 @@ if (!$disable_comments){
       <i class='material-icons'>insert_comment</i>
     </span>
   </a>
-  <a href='javascript:curtir($id_post, $index_post);' class='btn-flat btn-floating'>
+  <a class='btn-flat btn-floating'>
     <span>$contador_comentarios</span>
   </a>
   ";
@@ -23,21 +23,21 @@ if ( $registro = $con->query($sql_seleciona_se_ja_teve_curtida)->fetch_array() )
 echo (
   "<div class='w3-container w3-card w3-white w3-round w3-margin'><br>
     <a href='/pages/profile.php?profile_id=$profile_id'>
-      <img src='$avatar' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='width:60px'>
+      <img src='$avatar' alt='Avatar' class='w3-left w3-circle w3-margin-right' style='width:40px'>
     </a>
     <span class='w3-right w3-opacity'>$data_publicacao</span>
     <a href='/pages/profile.php?profile_id=$profile_id'>
       <h4>$nome</h4>
     </a>
     <hr class='w3-clear'>
-    <img src='$imagem' style='width:100%' class='w3-margin-bottom'>
+    <img src='$imagem' style='width:90%;' class='w3-margin-bottom'>
     <p>$descricao</p>
     <div class='Post-actions-container'>
       <div class='Post-actions-left'>
         <a href='javascript:curtir($id_post, $index_post);' class='waves-effect btn-flat btn-floating'>
           <i class='Post-actions-like-icon material-icons'>$icon_favorite</i>
         </a>
-        <a href='javascript:curtir($id_post, $index_post);' class='btn-flat btn-floating Post-actions-counter'>
+        <a class='btn-flat btn-floating Post-actions-counter'>
           $contador_curtidas
         </a>
       </div>
