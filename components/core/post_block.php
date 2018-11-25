@@ -76,3 +76,29 @@ echo (
     color: white;
   }
 </style>
+<script>
+	function curtir(id_postagem, index_postagem) {
+		$.ajax({
+			method: "POST",
+			url: '/actions/curtida.php',
+			dataType: 'json',
+			data: { acao: "like", postagem: id_postagem }
+		})
+		.done(function(result){
+			if (result.status) {
+        const post_like_counter = document.getElementsByClassName('Post-actions-counter')[index_postagem];
+        const post_liked_icon = document.getElementsByClassName('Post-actions-like-icon')[index_postagem];
+        post_like_counter.innerText = result.curtidas_contador;
+        if (result.curtido) {
+          post_liked_icon.className = `animated bounce ${post_liked_icon.className}`;
+          post_liked_icon.innerText = 'favorite';
+        } else {
+          post_liked_icon.innerText = 'favorite_border';
+          post_liked_icon.className = 'Post-actions-like-icon material-icons';
+        }
+			} else {
+				alert(result.msg);
+			}
+		});
+	}
+</script>

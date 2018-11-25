@@ -15,7 +15,7 @@
   $userId=$_SESSION['id_usuario'];
   $filtro = "WHERE id = '$userId'";
   $profile_id = $_GET['profile_id'];
-  if ($profile_id) {
+  if ($profile_id>=0) {
     $filtro = "WHERE id = '$profile_id'";
   }
 
@@ -61,5 +61,42 @@
   </div>
 </div>
 
+<?php
+$timeline_all_posts_sql = "SELECT
+                            COUNT(curtida.id_post) as contador_curtidas,
+                            COUNT(comentario.id_post) as contador_comentarios,
+                            post.id as post_id,
+                            post.descricao,
+                            post.imagem,
+                            pessoa.nome,
+                            pessoa.avatar,
+                            pessoa.id as profile_id,
+                            DATE_FORMAT(post.data_publicacao, '%d/%m/%Y') AS data_publicacao
+                          FROM post
+                          INNER JOIN pessoa ON pessoa.id = post.id_pessoa
+                          left JOIN curtida ON post.id = curtida.id_post
+                          left JOIN comentario ON post.id = comentario.id_post
+                          WHERE pessoa.id = $id
+                          GROUP BY post.id
+                          ORDER BY post.id DESC";
 
+  $retorno_timeline_all_posts_sql = $con->query($timeline_all_posts_sql);
+  if ($retorno_timeline_all_posts_sql == false) {
+    echo $retorno_timeline_all_posts_sql->error;
+  }
+  $index_post = 0;
+  while ($registro = $retorno_timeline_all_posts_sql->fetch_array()) {
+    $descricao = $registro['descricao'];
+    $id_post = $registro['post_id'];
+    $contador_curtidas = $registro['contador_curtidas'];
+    $contador_comentarios = $registro['contador_comentarios'];
+    $imagem = $registro['imagem'];
+    $data_publicacao = $registro['data_publicacao'];
+    $nome = $registro['nome'];
+    $profile_id = $registro['profile_id'];
+    $avatar = $registro['avatar'];
+    include('../components/core/post_block.php');
+    $index_post = $index_post + 1;
+  }
+?>
 <?php include_once "../rodape.php"; ?>

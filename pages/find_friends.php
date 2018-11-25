@@ -23,12 +23,18 @@
     $filtro = "and nome like '$nomeParam%'";
   }
 
-  $remove_relation = $_GET['remove_relationship'];
-  if ($remove_relation) {
-    $remove_friend_query = "DELETE FROM amigo WHERE id = $remove_relation";
+  $id_pessoa_amigo = $_GET['remove_relationship_id_pessoa_amigo'];
+  $id_pessoa = $_GET['remove_relationship_id_pessoa'];
+  if ($id_pessoa_amigo>=0 || $id_pessoa>=0) {
+    $remove_friend_query = "DELETE FROM amigo 
+                            WHERE id_pessoa_amigo = $id_pessoa_amigo and id_pessoa = $id_pessoa";
     $con->query($remove_friend_query);
+    $update_friend_query = "UPDATE amigo SET
+    status = '1'
+    WHERE id_pessoa_amigo = $id_pessoa and id_pessoa = $id_pessoa_amigo";
+    $con->query($update_friend_query);
   }
-  
+
   $facaSolicitacao_friendId=$_GET['facaSolicitacao_friendId'];
   if ($facaSolicitacao_friendId || $facaSolicitacao_friendId==0) {
     $add_friend_query = "INSERT INTO amigo (status, id_pessoa, id_pessoa_amigo)
@@ -109,11 +115,13 @@
         ";
         while ($amigo = $amigos->fetch_array()) {
           $relation_id = $amigo['id'];
+          $id_pessoa = $amigo['id_pessoa'];
+          $id_pessoa_amigo = $amigo['id_pessoa_amigo'];
           $relation_status = $amigo['status'];
           // 2 eu solicitei
           if ($amigo['status'] == 1) {
             $relation_button="
-              <a class='btn btn-info' href='javascript:removeSolicitacao($relation_id);'>
+              <a class='btn btn-info' href='javascript:removeSolicitacao($id_pessoa_amigo, $id_pessoa);'>
                 <i class='material-icons'>done</i>
               </a>
             ";
@@ -121,7 +129,7 @@
           // 3 ele aceitou
           if ($amigo['status'] == 2) {
             $relation_button="
-              <a class='btn btn-info' href='javascript:removeSolicitacao($relation_id);'>
+              <a class='btn btn-info' href='javascript:removeSolicitacao($id_pessoa_amigo, $id_pessoa);'>
                 <i class='material-icons'>done_all</i>
               </a>
             ";
@@ -152,8 +160,8 @@
     location.href = `${getFilter()}&facaSolicitacao_friendId=${friendId}`;
   }
 
-  function removeSolicitacao(relation_id) {
-    location.href = `${getFilter()}&remove_relationship=${relation_id}`;
+  function removeSolicitacao(id_pessoa_amigo, id_pessoa) {
+    location.href = `${getFilter()}&remove_relationship_id_pessoa_amigo=${id_pessoa_amigo}&remove_relationship_id_pessoa=${id_pessoa}`;
   }
 
 </script>

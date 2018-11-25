@@ -10,7 +10,7 @@ $solicitatoes_amizade = "SELECT *, pessoa.id as pessoa_id, amigo.id as amigo_sol
 
 $amigo_solicitacao_id=$_GET['amigo_solicitacao_id'];
 $aceitar_solicitacao_friendId=$_GET['aceitar_solicitacao_friendId'];
-if ($aceitar_solicitacao_friendId) {
+if ($aceitar_solicitacao_friendId>=0) {
   $add_friend_query = "INSERT INTO amigo (status, id_pessoa, id_pessoa_amigo)
                   VALUES ('2', $userId, $aceitar_solicitacao_friendId)";
   $con->query($add_friend_query);
