@@ -1,7 +1,6 @@
 <?php
   include "../bd.php";
   $timeline_all_posts_sql = 'SELECT
-                              COUNT(curtida.id_post) as contador_curtidas,
                               COUNT(comentario.id_post) as contador_comentarios,
                               post.id as post_id,
                               post.descricao,
@@ -12,7 +11,6 @@
                               DATE_FORMAT(post.data_publicacao, "%d/%m/%Y às %H:%i") AS data_publicacao
                             FROM post
                             INNER JOIN pessoa ON pessoa.id = post.id_pessoa
-                            left JOIN curtida ON post.id = curtida.id_post
                             left JOIN comentario ON post.id = comentario.id_post
                             GROUP BY post.id
                             ORDER BY post.id DESC';
@@ -32,8 +30,8 @@
     $nome = $registro['nome'];
     $profile_id = $registro['profile_id'];
     $avatar = $registro['avatar'];
-    $e_meu_amigo = $con->query("SELECT * FROM amigo where id_pessoa=$userId and id_pessoa_amigo=$profile_id");
-    if ($e_meu_amigo->num_rows) {
+    $e_meu_amigo = $con->query("SELECT * FROM amigo where id_pessoa=$userId and id_pessoa_amigo=$profile_id or");
+    if ($e_meu_amigo->num_rows || $userId==$profile_id) {
       include('../components/core/post_block.php');
     }
     $index_post = $index_post + 1;

@@ -149,11 +149,13 @@ echo("
         const post_liked_icon = document.getElementsByClassName('Post-actions-like-icon')[index_postagem];
         post_like_counter.innerText = result.curtidas_contador;
         if (result.curtido) {
+          post_like_counter.className = 'btn-flat btn-floating Post-actions-counter';
           post_liked_icon.className = `animated bounce ${post_liked_icon.className}`;
           post_liked_icon.innerText = 'favorite';
         } else {
-          post_liked_icon.innerText = 'favorite_border';
+          post_like_counter.className = 'btn-flat btn-floating  Post-actions-counter';
           post_liked_icon.className = 'Post-actions-like-icon material-icons';
+          post_liked_icon.innerText = 'favorite_border';
         }
 			} else {
 				alert(result.msg);
