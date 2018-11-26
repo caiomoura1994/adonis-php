@@ -5,16 +5,7 @@
     $nome = addslashes($_POST["nome"]);
     $senha = addslashes($_POST["senha"]);
     // $sexo = addslashes($_POST["sexo"]);
-    function insertNewUser() {
-      $sql_insert = "INSERT * 
-        FROM pessoa
-        WHERE email = '$email'
-        INSERT INTO `pessoa` (`nome`, `email`, `senha`, `sexo`, `nascimento`)
-        VALUES ('$nome', '$email', '$senha', '1', '2014-01-01');
-      ";
-      $con->query($sql_insert);
-
-    } 
+    echo("<script>console.log('$nome', '$email', '$senha')</script>");
 
     $sql = "SELECT *
       FROM pessoa
@@ -40,7 +31,10 @@
         </script>
       ";
     } else {
-      insertNewUser();
+      $sql_insert = "INSERT INTO pessoa (nome, email, senha, sexo, nascimento)
+        VALUES ('$nome', '$email', '$senha', '1', '2014-01-01');
+      ";
+      $con->query($sql_insert);
       echo "
       <script>
         alert('Voce foi cadastrado com sucesso, faça login para continuar');
