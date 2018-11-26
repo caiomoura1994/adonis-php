@@ -42,7 +42,7 @@
   }
 ?>
 <br>
-<div class="w3-card w3-round w3-white">
+<div class="w3-card w3-round w3-white" style="padding-top:16px;">
   <div class="w3-container">
     <h4 class="w3-center">
       <?php echo($nome);?>

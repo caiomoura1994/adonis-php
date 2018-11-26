@@ -32,7 +32,10 @@
     $nome = $registro['nome'];
     $profile_id = $registro['profile_id'];
     $avatar = $registro['avatar'];
-    include('../components/core/post_block.php');
+    $e_meu_amigo = $con->query("SELECT * FROM amigo where id_pessoa=$userId and id_pessoa_amigo=$profile_id");
+    if ($e_meu_amigo->num_rows) {
+      include('../components/core/post_block.php');
+    }
     $index_post = $index_post + 1;
 	}
 ?>
